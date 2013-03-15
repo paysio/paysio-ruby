@@ -1,0 +1,37 @@
+== Installation
+
+  $ gem install paysio
+
+== Usage
+
+  Paysio.api_key = 'YOUR_API_KEY'
+  Paysio::Charge.all
+
+== Paysio Objects
+  Paysio::Charge.all    # get list of charges
+  Paysio::Wallet.all    # get list of wallets
+  Paysio::Coupon.all    # get list of coupons
+  Paysio::Reward.all    # get list of rewards
+  Paysio::Event.all     # get list of events
+  Paysio::Log.all       # get list of logs
+  Paysio::Customer.all  # get list of customers
+
+== Actions: update
+  customer = Paysio::Customer.retrieve("cs_1111111")
+  customer.description = "test user"
+  customer.save
+
+== Actions: destroy
+  customer = Paysio::Customer.retrieve("cs_1111111")
+  customer.destroy
+
+== Actions: refund charge
+  charge = Paysio::Charge.retrieve("ch_1111111")
+  charge.refund
+
+
+== Actions: redirect to charge after create (e.g. in Ruby on Rails)
+  def create
+    charge = Paysio::Charge.create(amount: 100, payment_system_id: 't_123', description: 'test charge')
+    redirect_to charge.redirect
+  end
