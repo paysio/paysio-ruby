@@ -25,3 +25,14 @@ RSpec::Matchers.define :be_updatable_resource do |expected|
     c.name.should == "bar"
   end
 end
+RSpec::Matchers.define :be_deleteable_resource do |expected|
+  match do |actual|
+    client = authorized_paysio_client
+    subject = actual.class
+
+    client.expects(:get).once.returns(test_response(test_customer({name: "foo"})))
+    client.expects(:delete).once.returns(test_response(test_customer({name: "bar"})))
+    c = subject.retrieve("resource_id")
+    c.delete
+  end
+end

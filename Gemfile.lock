@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    paysio (1.0.3)
+    paysio (1.0.4)
       activemodel
       activesupport
       oj (> 2)

@@ -32,6 +32,7 @@
   def test_charge(params={})
     {
       :object => 'charge',
+      :id => "ch_BFyI4KoDVHzsfNoXpi4",
       :merchant_id => 'm_12345',
       :amount => 100,
       :fee => 10,
@@ -88,6 +89,10 @@
       :object => 'log',
       :request_url => 'http://example.com',
       :request_ip => '127.0.0.1',
+      :request_post_params  => {
+        :email => "test@test.ru",
+        :description => "Test customer"
+      },
       :livemode => false
     }.merge(params)
   end

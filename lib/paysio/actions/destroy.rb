@@ -1,7 +1,7 @@
 module Paysio
   module Actions
     module Destroy
-      def destroy(attrs = {})
+      def delete(attrs = {})
         response = Paysio::Client.request(:delete, path)
         refresh_from(response.to_hash)
       end
