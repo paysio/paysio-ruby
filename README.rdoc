@@ -30,8 +30,23 @@
   charge.refund
 
 
-== Actions: redirect to charge after create (e.g. in Ruby on Rails)
+== Sample: redirect to charge after create (e.g. in Ruby on Rails)
   def create
     charge = Paysio::Charge.create(amount: 100, payment_system_id: 't_123', description: 'test charge')
     redirect_to charge.redirect
+  end
+
+== Sample: handle webhook events
+  def webhook
+    Paysio.api_key = 'HZClZur5OW3BYimWSydQNsArbph2L7IRo0ql8HK'
+    event = Event.retrieve(params['id'])
+    if event.data.object == 'charge':
+      if event.type == 'charge.success'
+        pass #logic for charge success
+      elsif event.type == 'charge.failure'
+        pass #logic for charge failure
+      elsif event.type == 'charge.refund'
+        pass #logic for charge refund
+      end
+    end
   end
