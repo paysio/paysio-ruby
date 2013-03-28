@@ -9,6 +9,7 @@ require 'oj'
 require 'paysio/client'
 require 'paysio/json'
 require 'paysio/resource'
+require 'paysio/version'
 
 # actions
 require 'paysio/actions/list'
