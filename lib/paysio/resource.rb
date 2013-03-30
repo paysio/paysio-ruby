@@ -5,9 +5,11 @@ module Paysio
 
     attr_accessor :redirect
 
-    def initialize(id = nil)
+    def initialize(values = {})
       @values = {}
-      @id = id
+      @id = values['id'] if values['id']
+      refresh_from(values)
+      self.class.define_attribute_methods(attributes.keys)
     end
 
     def refresh_from(values)
@@ -87,9 +89,7 @@ module Paysio
           else
             klass = Paysio::Resource
           end
-          resource = klass.new(resp['id'])
-          resource.refresh_from(resp)
-          resource.class.define_attribute_methods(resource.attributes.keys)
+          resource = klass.new(resp)
           resource.redirect = redirect_url
           resource
         else

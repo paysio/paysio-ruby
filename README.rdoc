@@ -39,7 +39,13 @@
 == Sample: handle webhook events
   def webhook
     Paysio.api_key = 'HZClZur5OW3BYimWSydQNsArbph2L7IRo0ql8HK'
-    event = Event.retrieve(params['id'])
+    event = Paysio::Event.new(params)
+  end
+
+== Sample: handle webhook events, with getting event from api
+  def webhook
+    Paysio.api_key = 'HZClZur5OW3BYimWSydQNsArbph2L7IRo0ql8HK'
+    event = Paysio::Event.retrieve(params['id'])
     if event.data.object == 'charge':
       if event.type == 'charge.success'
         pass #logic for charge success
