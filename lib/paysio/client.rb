@@ -3,7 +3,7 @@ module Paysio
     class << self
       def request(method, path, params = {}, headers = {})
         unless Paysio.api_key
-          raise Paysio::Exceptions::NotAuthorized, "Please specify Paysio.api_key"
+          raise Paysio::Errors::Unauthorized, "Please specify Paysio.api_key"
         end
         headers = {
           :user_agent => "Pays.io RubyClient/#{Paysio::VERSION}",
@@ -23,18 +23,34 @@ module Paysio
         else
           opts[:payload] = stringify_params(params)
         end
-        response = self.execute(opts)
+        response = execute(opts)
         body, code = response.body, response.code
         begin
           resp = Paysio::JSON.decode(body)
         rescue Oj::ParseError
-          raise Paysio::Exceptions::APIError.new("Invalid response object from API: #{body.inspect} (#{code})", code, body)
+          raise Paysio::Exceptions::InternalError.new("Invalid response object from API: #{body.inspect} (#{code})", code, body)
         end
         Paysio::Resource.build_from(resp, response.headers[:location])
       end
 
       def execute(opts)
         RestClient::Request.execute(opts)
+        puts "test"
+      rescue RuntimeError => e
+        case e.http_code.to_i
+        when 400
+          raise Paysio::Errors::BadRequest, e.http_body
+        when 401
+          raise Paysio::Errors::Unauthorized, e.http_body
+        when 403
+          raise Paysio::Errors::Forbidden, e.http_body
+        when 404
+          raise Paysio::Errors::NotFound, e.http_body
+        when 500
+          raise Paysio::Errors::InternalError, e.http_body
+        else
+          raise e
+        end
       end
 
       def uri_escape(key)

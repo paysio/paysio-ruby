@@ -19,7 +19,7 @@ require 'paysio/actions/destroy'
 require 'paysio/actions/find'
 
 # exceptions
-require 'paysio/exceptions'
+require 'paysio/errors'
 
 # resources
 require 'paysio/resources/list'
