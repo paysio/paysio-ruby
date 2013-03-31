@@ -35,7 +35,6 @@ module Paysio
 
       def execute(opts)
         RestClient::Request.execute(opts)
-        puts "test"
       rescue RuntimeError => e
         case e.http_code.to_i
         when 400

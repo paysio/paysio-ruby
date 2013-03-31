@@ -2,8 +2,8 @@ module Paysio
   module Actions
     module List
       module ClassMethods
-        def all
-          response = Paysio::Client.request(:get, path)
+        def all(params = {})
+          response = Paysio::Client.request(:get, path, params)
           Resource.build_from(response)
         end
 
