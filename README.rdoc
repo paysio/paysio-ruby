@@ -56,3 +56,6 @@
       end
     end
   end
+
+== Sample: using js form
+https://gist.github.com/gvalmon/104ee698608fee04fae4

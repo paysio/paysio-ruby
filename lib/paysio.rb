@@ -10,6 +10,7 @@ require 'paysio/client'
 require 'paysio/json'
 require 'paysio/resource'
 require 'paysio/version'
+require 'paysio/form'
 
 # actions
 require 'paysio/actions/list'
@@ -36,9 +37,14 @@ module Paysio
   @@api_key = nil
   @@api_base = 'api.paysio.com'
   @@api_version = 'v1'
-  mattr_accessor :api_key, :api_base, :api_version
+  @@publishable_key = nil
+  mattr_accessor :api_key, :api_base, :api_version, :publishable_key
 
   def self.api_url(path = '')
     "https://#{api_key}@#{api_base}/#{api_version}#{path}"
+  end
+
+  def self.static_url(path = '')
+    "https://#{api_base}/static/#{api_version}#{path}"
   end
 end
