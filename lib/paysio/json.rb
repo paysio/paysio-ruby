@@ -6,7 +6,7 @@ module Paysio
       end
 
       def encode(json)
-        Oj.dump(json, mode: :compat)
+        Oj.dump(json, :mode => :compat)
       end
     end
   end
